@@ -2,21 +2,23 @@ package br.com.devmedia.course.repository;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.devmedia.course.CourseSpringDataApplication;
 import br.com.devmedia.course.entity.Person;
 import br.com.devmedia.course.entity.Phone;
 import br.com.devmedia.course.entity.Phone.TypePhone;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-data.xml" })
+@SpringApplicationConfiguration(classes = CourseSpringDataApplication.class)
 public class PhoneRepositoryTest {
     private Phone phoneOne;
     private Phone phoneTwo;
@@ -34,13 +36,6 @@ public class PhoneRepositoryTest {
         this.phoneRepository.save(this.phoneOne);
         this.phoneRepository.save(this.phoneTwo);
         this.phoneRepository.save(this.phoneThree);
-    }
-    
-    @After
-    public void tearDown() {
-        this.phoneRepository.delete(this.phoneOne.getId());
-        this.phoneRepository.delete(this.phoneTwo.getId());
-        this.phoneRepository.delete(this.phoneThree.getId());
     }
     
     @Test

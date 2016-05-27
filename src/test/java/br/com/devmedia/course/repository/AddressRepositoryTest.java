@@ -2,20 +2,22 @@ package br.com.devmedia.course.repository;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.devmedia.course.CourseSpringDataApplication;
 import br.com.devmedia.course.entity.Address;
 import br.com.devmedia.course.entity.Address.TypeAddress;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-data.xml" })
+@SpringApplicationConfiguration(classes = CourseSpringDataApplication.class)
 public class AddressRepositoryTest {
     private Address addressOne;
     private Address addressTwo;
@@ -35,13 +37,6 @@ public class AddressRepositoryTest {
         this.addressRepository.save(this.addressThree);
     }
     
-    @After
-    public void tearDown() {
-        this.addressRepository.delete(this.addressOne.getId());
-        this.addressRepository.delete(this.addressTwo.getId());
-        this.addressRepository.delete(this.addressThree.getId());
-    }
-
     @Test
     public void shouldCountAddressesOnDatabase() {
         Assert.assertEquals(3L, this.addressRepository.count());

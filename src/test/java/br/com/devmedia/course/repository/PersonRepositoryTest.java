@@ -2,19 +2,21 @@ package br.com.devmedia.course.repository;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.devmedia.course.CourseSpringDataApplication;
 import br.com.devmedia.course.entity.Person;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-data.xml" })
+@SpringApplicationConfiguration(classes = CourseSpringDataApplication.class)
 public class PersonRepositoryTest {
     private Person personOne;
     private Person personTwo;
@@ -34,13 +36,6 @@ public class PersonRepositoryTest {
         this.personRepository.save(this.personThree);
     }
     
-    @After
-    public void tearDown() {
-        this.personRepository.delete(this.personOne.getId());
-        this.personRepository.delete(this.personTwo.getId());
-        this.personRepository.delete(this.personThree.getId());
-    }
-
     @Test
     public void shouldCountPeopleOnDatabase() {
         Assert.assertEquals(3L, this.personRepository.count());
