@@ -66,6 +66,11 @@ public class Person implements Serializable {
         this.age = age;
     }
     
+    public Person(String firstName, String lastName, Integer age, Document document) {
+        this(firstName, lastName, age);
+        this.document = document;
+    }
+    
     public void addPhone(Phone phone) {
         if(this.phones == null) {
             this.phones = new ArrayList<>();
