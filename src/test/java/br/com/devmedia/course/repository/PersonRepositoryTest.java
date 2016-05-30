@@ -200,4 +200,54 @@ public class PersonRepositoryTest {
             Assert.assertTrue(person.getAge() >= 22 && person.getAge() <= 23);
         }
     }
+    
+    @Test
+    public void shouldFindPeopleByAgeGreaterThan() {
+        List<Person> people = this.personRepository.findByAgeGreaterThan(22);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getAge() > 22);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByAgeLessThan() {
+        List<Person> people = this.personRepository.findByAgeLessThan(30);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getAge() < 30);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByAgeGreaterThanEqual() {
+        List<Person> people = this.personRepository.findByAgeGreaterThanEqual(24);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getAge() >= 24);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByAgeLessThanEqual() {
+        List<Person> people = this.personRepository.findByAgeLessThanEqual(24);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getAge() <= 24);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByFirstNameGreaterThan() {
+        List<Person> people = this.personRepository.findByFirstNameGreaterThan("João");
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertEquals("Luiz", person.getFirstName());
+        }
+    }
 }

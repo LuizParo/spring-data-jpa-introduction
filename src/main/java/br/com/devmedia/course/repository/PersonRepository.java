@@ -28,6 +28,21 @@ public interface PersonRepository extends JpaRepository<Person , Long> {
     // Search by age between a range of age.
     List<Person> findByAgeBetween(int min, int max);
     
-    // Serach by last name and age between a range of age.
+    // Search by last name and age between a range of age.
     List<Person> findByLastNameAndAgeBetween(String lastName, int min, int max);
+    
+    // Search by a age greater than the given parameter.
+    List<Person> findByAgeGreaterThan(Integer age);
+    
+    // Search by a age lesser than the given parameter.
+    List<Person> findByAgeLessThan(Integer age);
+    
+    // Search by a age greater or equal than the given parameter.
+    List<Person> findByAgeGreaterThanEqual(Integer age);
+    
+    // Search by a age lesser or equal than the given parameter.
+    List<Person> findByAgeLessThanEqual(Integer age);
+    
+    // Search by first name greater than the given parameter.
+    List<Person> findByFirstNameGreaterThan(String firstName);
 }
