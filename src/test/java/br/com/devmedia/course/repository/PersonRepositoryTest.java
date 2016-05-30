@@ -130,4 +130,74 @@ public class PersonRepositoryTest {
             Assert.assertNotNull(person.getId());
         }
     }
+    
+    @Test
+    public void shouldFindPeopleByAge() {
+        List<Person> people = this.personRepository.findByAge(24);
+        Assert.assertFalse(people.isEmpty());
+        for (Person person : people) {
+            Assert.assertEquals(new Integer(24), person.getAge());
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleDifferentFromAge() {
+        List<Person> people = this.personRepository.findByAgeNot(24);
+        Assert.assertFalse(people.isEmpty());
+        for (Person person : people) {
+            Assert.assertFalse(person.getAge().equals(24));
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByFirstName() {
+        List<Person> people = this.personRepository.findByFirstNameLike("Luiz");
+        Assert.assertFalse(people.isEmpty());
+        for (Person person : people) {
+            Assert.assertEquals("Luiz", person.getFirstName());
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleDifferentFromFirstName() {
+        List<Person> people = this.personRepository.findByFirstNameNotLike("Luiz");
+        Assert.assertFalse(people.isEmpty());
+        for (Person person : people) {
+            Assert.assertFalse(person.getFirstName().equals("Luiz"));
+        }
+    }
+    
+    @Test
+    public void shouldFindPersonByFirstNameAndLastName() {
+        Person person = this.personRepository.findByFirstNameAndLastName("Luiz", "Paro");
+        Assert.assertEquals("Luiz Paro", person.getFirstName() + " " + person.getLastName());
+    }
+    
+    @Test
+    public void shouldFindPeopleByAgeOrFirstName() {
+        List<Person> people = this.personRepository.findByAgeOrFirstName(24, "Carlos");
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+    }
+    
+    @Test
+    public void shouldFindPeopleByAgeBetween() {
+        List<Person> people = this.personRepository.findByAgeBetween(22, 24);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getAge() >= 22 && person.getAge() <= 24);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByLastNameAndAgeBetween() {
+        List<Person> people = this.personRepository.findByLastNameAndAgeBetween("Paro", 22, 23);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertEquals("Paro", person.getLastName());
+            Assert.assertTrue(person.getAge() >= 22 && person.getAge() <= 23);
+        }
+    }
 }
