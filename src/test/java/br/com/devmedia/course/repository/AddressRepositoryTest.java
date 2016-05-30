@@ -28,9 +28,9 @@ public class AddressRepositoryTest {
     
     @Before
     public void setUp() {
-        this.addressOne = new Address("São Paulo", "Test Street", TypeAddress.RESIDENTIAL);
-        this.addressTwo = new Address("Salvador", "Test Street", TypeAddress.COMMERCIAL);
-        this.addressThree = new Address("Rio de Janeiro", "Test Street", TypeAddress.RESIDENTIAL);
+        this.addressOne = new Address("São Paulo", "Rua Ubatuba", TypeAddress.RESIDENTIAL);
+        this.addressTwo = new Address("Salvador", "Rua Bertioga", TypeAddress.COMMERCIAL);
+        this.addressThree = new Address("Rio de Janeiro", "Rua Santos", TypeAddress.RESIDENTIAL);
         
         this.addressRepository.save(this.addressOne);
         this.addressRepository.save(this.addressTwo);
@@ -49,6 +49,42 @@ public class AddressRepositoryTest {
         Assert.assertEquals(3, allAddresses.size());
         for (Address address : allAddresses) {
             Assert.assertNotNull(address.getId());
+        }
+    }
+    
+    @Test
+    public void shouldFindAdressesByCityStartingWith() {
+        List<Address> addresses = this.addressRepository.findByCityStartingWith("Sal");
+        Assert.assertTrue(!addresses.isEmpty());
+        for (Address address : addresses) {
+            Assert.assertTrue(address.getCity().startsWith("Sal"));
+        }
+    }
+    
+    @Test
+    public void shouldFindAddressesByStreetEndingWith() {
+        List<Address> addresses = this.addressRepository.findByStreetEndingWith("Ubatuba");
+        Assert.assertTrue(!addresses.isEmpty());
+        for (Address address : addresses) {
+            Assert.assertTrue(address.getStreet().endsWith("Ubatuba"));
+        }
+    }
+    
+    @Test
+    public void shouldFindAddressesByStreetContaining() {
+        List<Address> addresses = this.addressRepository.findByStreetContaining("San");
+        Assert.assertTrue(!addresses.isEmpty());
+        for (Address address : addresses) {
+            Assert.assertTrue(address.getStreet().contains("San"));
+        }
+    }
+    
+    @Test
+    public void shouldFindAddressesByCityStartingWithOrStreetEndingWith() {
+        List<Address> addresses = this.addressRepository.findByCityStartingWithOrStreetEndingWith("Sal", "San");
+        Assert.assertTrue(!addresses.isEmpty());
+        for (Address address : addresses) {
+            Assert.assertTrue(address.getCity().startsWith("Sal") || address.getStreet().endsWith("San"));
         }
     }
 }
