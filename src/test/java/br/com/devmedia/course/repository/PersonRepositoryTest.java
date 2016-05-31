@@ -250,4 +250,34 @@ public class PersonRepositoryTest {
             Assert.assertEquals("Luiz", person.getFirstName());
         }
     }
+    
+    @Test
+    public void shouldFindPeopleByAgeIn() {
+        List<Person> people = this.personRepository.findByAgeIn(22, 24);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getAge() == 22 || person.getAge() == 24);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByAgeNotIn() {
+        List<Person> people = this.personRepository.findByAgeNotIn(22, 24);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getAge() != 22 || person.getAge() != 24);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByFirstNameIgnoringCase() {
+        List<Person> people = this.personRepository.findByFirstNameIgnoreCase("luiz");
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertEquals("Luiz", person.getFirstName());
+        }
+    }
 }

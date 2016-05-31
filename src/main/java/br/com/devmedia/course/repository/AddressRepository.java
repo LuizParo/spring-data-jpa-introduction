@@ -18,4 +18,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     
     // Search for addresses starting with the letters of the city or ending with the letters of street.
     List<Address> findByCityStartingWithOrStreetEndingWith(String city, String street);
+    
+    // Search addresses by city in desc order.
+    List<Address> findByCityOrderByTypeDesc(String city);
 }

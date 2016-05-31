@@ -45,4 +45,13 @@ public interface PersonRepository extends JpaRepository<Person , Long> {
     
     // Search by first name greater than the given parameter.
     List<Person> findByFirstNameGreaterThan(String firstName);
+    
+    // Search by age in the given array or collection of ages.
+    List<Person> findByAgeIn(Integer... ages);
+    
+    // Search by age not in the given array or collection of ages.
+    List<Person> findByAgeNotIn(Integer... ages);
+    
+    // Search by first name ignoring upper and lower case.
+    List<Person> findByFirstNameIgnoreCase(String firstName);
 }

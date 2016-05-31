@@ -87,4 +87,12 @@ public class AddressRepositoryTest {
             Assert.assertTrue(address.getCity().startsWith("Sal") || address.getStreet().endsWith("San"));
         }
     }
+    
+    @Test
+    public void shouldFindAddressesByCityOrderByTypeDesc() {
+        this.addressRepository.save(new Address("Rio de Janeiro", "Rua Santos", TypeAddress.COMMERCIAL));
+        List<Address> addresses = this.addressRepository.findByCityOrderByTypeDesc("Rio de Janeiro");
+        Assert.assertTrue(!addresses.isEmpty());
+        Assert.assertEquals(2, addresses.size());
+    }
 }
