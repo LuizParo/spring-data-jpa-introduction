@@ -1,5 +1,6 @@
 package br.com.devmedia.course.repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.devmedia.course.CourseSpringDataApplication;
 import br.com.devmedia.course.entity.Document;
 import br.com.devmedia.course.entity.Person;
+import br.com.devmedia.course.entity.Phone;
+import br.com.devmedia.course.entity.Phone.TypePhone;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -278,6 +281,55 @@ public class PersonRepositoryTest {
         Assert.assertEquals(1, people.size());
         for (Person person : people) {
             Assert.assertEquals("Luiz", person.getFirstName());
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByDocumentIsNull() {
+        this.personOne.setDocument(null);
+        this.personRepository.saveAndFlush(this.personOne);
+        
+        List<Person> people = this.personRepository.findByDocumentIsNull();
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getDocument() == null);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByDocumentIsNotNull() {
+        List<Person> people = this.personRepository.findByDocumentIsNotNull();
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(3, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getDocument() != null);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByPhonesNumberStartingWith() {
+        this.personOne.setPhones(new ArrayList<>(Arrays.asList(new Phone(TypePhone.RESIDENTIAL, "19 5487-9632", this.personOne))));
+        this.personRepository.saveAndFlush(this.personOne);
+        
+        List<Person> people = this.personRepository.findByPhonesNumberStartingWith("19 5487");
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getPhones().get(0).getNumber().startsWith("19 5487"));
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByAgeGreaterThanOrderByFirstNameAscLastNameAsc() {
+        Person other = new Person("João", "Pedro", 30);
+        this.personRepository.saveAndFlush(other);
+        
+        List<Person> people = this.personRepository.findByAgeGreaterThanOrderByFirstNameAscLastNameAsc(29);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertEquals("João", person.getFirstName());
         }
     }
 }

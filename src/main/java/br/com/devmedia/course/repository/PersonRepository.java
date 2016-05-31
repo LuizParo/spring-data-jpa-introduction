@@ -54,4 +54,16 @@ public interface PersonRepository extends JpaRepository<Person , Long> {
     
     // Search by first name ignoring upper and lower case.
     List<Person> findByFirstNameIgnoreCase(String firstName);
+    
+    // Search by document being null.
+    List<Person> findByDocumentIsNull();
+    
+    // Search by document not being null.
+    List<Person> findByDocumentIsNotNull();
+    
+    // Search by phone number mapped in person.
+    List<Person> findByPhonesNumberStartingWith(String number);
+    
+    // Search by age ordering by first and last name asc.
+    List<Person> findByAgeGreaterThanOrderByFirstNameAscLastNameAsc(Integer age);
 }
