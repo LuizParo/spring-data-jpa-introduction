@@ -373,4 +373,24 @@ public class PersonRepositoryTest {
             Assert.assertTrue(person.getDocument().getCpf().endsWith("789-98"));
         }
     }
+    
+    @Test
+    public void shouldFindPeopleByAgeBetweenUsingQueryAnnotation() {
+        List<Person> people = this.personRepository.findByAgeBetween(22, 24);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getAge() >= 22 && person.getAge() <= 24);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByFirstNames() {
+        List<Person> people = this.personRepository.findByFirstNames("Luiz", "Carlos");
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getFirstName().equals("Luiz") || person.getFirstName().equals("Carlos"));
+        }
+    }
 }
