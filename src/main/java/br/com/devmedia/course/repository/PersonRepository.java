@@ -3,6 +3,7 @@ package br.com.devmedia.course.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import br.com.devmedia.course.entity.Person;
 
@@ -66,4 +67,20 @@ public interface PersonRepository extends JpaRepository<Person , Long> {
     
     // Search by age ordering by first and last name asc.
     List<Person> findByAgeGreaterThanOrderByFirstNameAscLastNameAsc(Integer age);
+    
+    // Search by first name using the annotation @Query.
+    @Query("select p from Person p where p.firstName like ?1")
+    List<Person> findByFirstName(String firstName);
+    
+    // Search by first name or age using the annotation @Query.
+    @Query("select p from Person p where p.firstName like ?1 or p.age = ?2")
+    List<Person> findByFirstNameOrAge(String firstName, Integer age);
+    
+    // Search by first name and age using the annotation @Query.
+    @Query("select p from Person p where p.firstName like ?2 and p.age = ?1")
+    List<Person> findByFirstNameAndAge(Integer age, String firstName);
+    
+    // Search by CPF ending with the given parameter using the annotation @Query.
+    @Query("select p from Person p where p.document.cpf like %?1")
+    List<Person> findByDocumentCPFEndsWith(String value);
 }

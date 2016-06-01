@@ -153,7 +153,7 @@ public class PersonRepositoryTest {
     }
     
     @Test
-    public void shouldFindPeopleByFirstName() {
+    public void shouldFindPeopleByFirstNameLike() {
         List<Person> people = this.personRepository.findByFirstNameLike("Luiz");
         Assert.assertFalse(people.isEmpty());
         for (Person person : people) {
@@ -330,6 +330,47 @@ public class PersonRepositoryTest {
         Assert.assertEquals(2, people.size());
         for (Person person : people) {
             Assert.assertEquals("João", person.getFirstName());
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByFirstName() {
+        List<Person> people = this.personRepository.findByFirstName("Luiz");
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertEquals("Luiz", person.getFirstName());
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByFirstNameOrAge() {
+        List<Person> people = this.personRepository.findByFirstNameOrAge("Luiz", 30);
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(2, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getFirstName().equals("Luiz") || person.getAge() == 30);
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByFirstNameAndAge() {
+        List<Person> people = this.personRepository.findByFirstNameAndAge(24, "Luiz");
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertEquals("Luiz", person.getFirstName());
+            Assert.assertEquals(new Integer(24), person.getAge());
+        }
+    }
+    
+    @Test
+    public void shouldFindPeopleByDocumentCPFEndsWith() {
+        List<Person> people = this.personRepository.findByDocumentCPFEndsWith("789-98");
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(1, people.size());
+        for (Person person : people) {
+            Assert.assertTrue(person.getDocument().getCpf().endsWith("789-98"));
         }
     }
 }
