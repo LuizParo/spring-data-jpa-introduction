@@ -13,10 +13,28 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "address")
+@NamedQuery(
+        name = "Address.findByCity",
+        query = "select a from Address a where a.city = ?1"
+)
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "Address.findByFullAddress",
+                query = "select * from address where city = ?1 and street = ?2",
+                resultClass = Address.class
+        ),
+        @NamedNativeQuery(
+                name = "Address.findConcatAddress",
+                query = "select funcConcatAddress(?1)"
+        )
+})
 public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
     

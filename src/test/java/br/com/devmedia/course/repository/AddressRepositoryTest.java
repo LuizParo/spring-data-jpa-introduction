@@ -53,7 +53,7 @@ public class AddressRepositoryTest {
     }
     
     @Test
-    public void shouldFindAdressesByCityStartingWith() {
+    public void shouldFindAddressesByCityStartingWith() {
         List<Address> addresses = this.addressRepository.findByCityStartingWith("Sal");
         Assert.assertTrue(!addresses.isEmpty());
         for (Address address : addresses) {
@@ -94,5 +94,46 @@ public class AddressRepositoryTest {
         List<Address> addresses = this.addressRepository.findByCityOrderByTypeDesc("Rio de Janeiro");
         Assert.assertTrue(!addresses.isEmpty());
         Assert.assertEquals(2, addresses.size());
+    }
+    
+    @Test
+    public void shouldFindAddressesByCity() {
+        List<Address> addresses = this.addressRepository.findByCity("Salvador");
+        Assert.assertTrue(!addresses.isEmpty());
+        for (Address address : addresses) {
+            Assert.assertEquals("Salvador", address.getCity());
+        }
+    }
+    
+    @Test
+    public void shouldFindByFullAddress() {
+        Address address = this.addressRepository.findByFullAddress("São Paulo", "Rua Ubatuba");
+        Assert.assertNotNull(address);
+        Assert.assertEquals("São Paulo", address.getCity());
+        Assert.assertEquals("Rua Ubatuba", address.getStreet());
+    }
+    
+    @Test
+    public void shouldFindAddressByCityAndStreet() {
+        Address address = this.addressRepository.findByCityAndStreet("São Paulo", "Rua Ubatuba");
+        Assert.assertNotNull(address);
+        Assert.assertEquals("São Paulo", address.getCity());
+        Assert.assertEquals("Rua Ubatuba", address.getStreet());
+    }
+    
+    @Test
+    public void shouldFindConcatAddress() {
+        String addressConcat = this.addressRepository.findConcatAddress(this.addressOne.getId());
+        Assert.assertNotNull(addressConcat);
+        Assert.assertTrue(!addressConcat.isEmpty());
+        Assert.assertEquals("São Paulo - Rua Ubatuba", addressConcat);
+    }
+    
+    @Test
+    public void shouldFindConcatAddressUsingNativeQuery() {
+        String addressConcat = this.addressRepository.findConcatAddressUsingNativeQuery(this.addressOne.getId());
+        Assert.assertNotNull(addressConcat);
+        Assert.assertTrue(!addressConcat.isEmpty());
+        Assert.assertEquals("São Paulo - Rua Ubatuba", addressConcat);
     }
 }
