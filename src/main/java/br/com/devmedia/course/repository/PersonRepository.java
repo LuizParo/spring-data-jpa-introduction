@@ -92,4 +92,22 @@ public interface PersonRepository extends JpaRepository<Person , Long> {
     // Search by first names between the given parameters using the annotation @Query.
     @Query("select p from Person p where p.firstName in :names order by p.age asc")
     List<Person> findByFirstNames(@Param("names") String... firstNames);
+    
+    // Search first result ordered by last name desc.
+    Person findFirstByOrderByLastNameDesc();
+    
+    // Search first result ordered by last name asc.
+    Person findFirstByOrderByLastNameAsc();
+    
+    // Search top result ordered by age desc.
+    Person findTopByOrderByAgeDesc();
+    
+    // Search top result ordered by age asc.
+    Person findTopByOrderByAgeAsc();
+    
+    // Search top 3 results ordered by age asc.
+    List<Person> findTop3ByOrderByAgeAsc();
+    
+    // Search first 3 results ordered by last name asc.
+    List<Person> findFirst3ByOrderByLastNameAsc();
 }

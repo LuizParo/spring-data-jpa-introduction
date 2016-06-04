@@ -393,4 +393,42 @@ public class PersonRepositoryTest {
             Assert.assertTrue(person.getFirstName().equals("Luiz") || person.getFirstName().equals("Carlos"));
         }
     }
+    
+    @Test
+    public void shouldFindFirstPersonOrderByLastNameDesc() {
+        Person person = this.personRepository.findFirstByOrderByLastNameDesc();
+        Assert.assertEquals("Silva", person.getLastName());
+    }
+    
+    @Test
+    public void shouldFindFirstPersonOrderByLastNameAsc() {
+        Person person = this.personRepository.findFirstByOrderByLastNameAsc();
+        Assert.assertEquals("Paro", person.getLastName());
+    }
+    
+    @Test
+    public void shouldFindTopPersonOrderByAgeDesc() {
+        Person person = this.personRepository.findTopByOrderByAgeDesc();
+        Assert.assertEquals(new Integer(30), person.getAge());
+    }
+    
+    @Test
+    public void shouldFindTopPersonOrderByAgeAsc() {
+        Person person = this.personRepository.findTopByOrderByAgeAsc();
+        Assert.assertEquals(new Integer(22), person.getAge());
+    }
+    
+    @Test
+    public void shouldFindTop3PeopleOrderByAgeAsc() {
+        List<Person> people = this.personRepository.findTop3ByOrderByAgeAsc();
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(3, people.size());
+    }
+    
+    @Test
+    public void shouldFindFirst3PeopleOrderByLastNameAsc() {
+        List<Person> people = this.personRepository.findFirst3ByOrderByLastNameAsc();
+        Assert.assertFalse(people.isEmpty());
+        Assert.assertEquals(3, people.size());
+    }
 }
