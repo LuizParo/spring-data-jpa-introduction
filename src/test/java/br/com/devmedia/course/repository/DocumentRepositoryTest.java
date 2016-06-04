@@ -45,4 +45,16 @@ public class DocumentRepositoryTest {
             Assert.assertTrue(document.getCpf().startsWith("987.654"));
         }
     }
+    
+    @Test
+    public void shouldReplaceCPFCharactersForEmpty() {
+        String cleanCPF = this.documentRepository.replaceCPF(this.documentOne.getId());
+        Assert.assertEquals("98765432185", cleanCPF);
+    }
+    
+    @Test
+    public void shouldReplaceCPFCharactersForEmptyUsingNamedStoredProcedureQuery() {
+        String cleanCPF = this.documentRepository.replaceCPF(this.documentOne.getId());
+        Assert.assertEquals("98765432185", cleanCPF);
+    }
 }

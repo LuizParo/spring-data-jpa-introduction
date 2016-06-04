@@ -49,4 +49,22 @@ public class PhoneRepositoryTest {
         Assert.assertFalse(allPhones.isEmpty());
         Assert.assertEquals(3, allPhones.size());
     }
+    
+    @Test
+    public void shouldSetPhoneNumber() {
+        int returnIdentifier = this.phoneRepository.setPhoneNumber("55 5555-5555", this.phoneOne.getId());
+        Assert.assertEquals(1, returnIdentifier); // Success
+    }
+    
+    @Test
+    public void shouldSetPhoneType() {
+        int returnIdentifier = this.phoneRepository.setPhoneType(TypePhone.COMMERCIAL, this.phoneOne.getId());
+        Assert.assertEquals(1, returnIdentifier); // Success
+    }
+    
+    @Test
+    public void shouldRemovePhoneByNumber() {
+        int returnIdentifier = this.phoneRepository.removePhoneByNumber(this.phoneOne.getNumber());
+        Assert.assertEquals(1, returnIdentifier); // Success
+    }
 }

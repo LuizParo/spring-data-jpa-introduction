@@ -7,10 +7,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "document")
+@NamedStoredProcedureQuery(
+        name = "docs.procedureReplaceCPF",
+        procedureName = "procReplaceCPF",
+        parameters = {
+                @StoredProcedureParameter(
+                        mode = ParameterMode.IN,
+                        name = "ID_IN",
+                        type = Long.class
+                ),
+                @StoredProcedureParameter(
+                        mode = ParameterMode.OUT,
+                        name = "CPF_OUT",
+                        type = String.class
+                )
+        }
+)
 public class Document implements Serializable {
     private static final long serialVersionUID = 1L;
 
